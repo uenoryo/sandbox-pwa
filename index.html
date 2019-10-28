@@ -25,45 +25,43 @@
     </main>
 
     <script>
-      {
-        const medias = {
-          audio: false,
-          video: {
-            facingMode: {
-              exact: "environment", // リアカメラにアクセス
-              width: { min: 1280 },
-              height: { min: 720 }
-            }
+      const medias = {
+        audio: false,
+        video: {
+          facingMode: {
+            exact: "environment", // リアカメラにアクセス
+            width: { min: 1280 },
+            height: { min: 720 }
           }
         }
-        var mediaStream = null;
+      }
+      var mediaStream = null;
 
-        function launchCamera() {
-          const video = document.getElementById("video");
-          const media = navigator.mediaDevices.getUserMedia(medias);
+      function launchCamera() {
+        const video = document.getElementById("video");
+        const media = navigator.mediaDevices.getUserMedia(medias);
 
-          media
-            .then((stream) => {
-              video.srcObject = stream
-              // mediaStream = stream
-            })
-            .catch((err) => {
-              alert(err);
-              console.error(err);
-            })
+        media
+          .then((stream) => {
+            video.srcObject = stream
+            mediaStream = stream
+          })
+          .catch((err) => {
+            alert(err);
+            console.error(err);
+          })
+      }
+
+      function stopCamera() {
+        if (mediaStream === null) {
+          alert("カメラを起動していません")
+          return
         }
 
-        // function stopCamera() {
-        //   if (mediaStream === null) {
-        //     alert("カメラを起動していません")
-        //     return
-        //   }
+        const video = document.getElementById("video")
 
-        //   const video = document.getElementById("video")
-
-        //   video.srcObject = null
-        //   mediaStream.stop()
-        // }
+        video.srcObject = null
+        mediaStream.stop()
       }
     </script>
     <style>
