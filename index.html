@@ -13,43 +13,70 @@
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
-    <video id="video" autoplay playsinline></video>
+
+    <main>
+      <video id="video" autoplay playsinline></video>
+      <div class="menu">
+        <button class="buttonA" onClick="launchCamera()">カメラ起動</button>
+        <button class="buttonB">カメラ停止</button>
+      </div>
+    </main>
+
     <script>
-        const medias = {
-          audio: false,
-          video: {
-            facingMode: {
-              exact: "environment", // リアカメラにアクセス
-              width: { min: 1280 },
-              height: { min: 720 }
-            }
+      const medias = {
+        audio: false,
+        video: {
+          facingMode: {
+            exact: "environment", // リアカメラにアクセス
+            width: { min: 1280 },
+            height: { min: 720 }
           }
-        };
+        }
+      }
+
+      function launchCamera() {
         const video = document.getElementById("video");
         const promise = navigator.mediaDevices.getUserMedia(medias);
 
-        promise.then(successCallback)
-               .catch(errorCallback);
-
-        function successCallback(stream) {
-          video.srcObject = stream;
-        };
-
-        function errorCallback(err) {
-          alert(err);
-          console.error(err);
-        };
+        promise
+          .then((stream) => {
+            video.srcObject = stream
+          })
+          .catch((err) => {
+            alert(err);
+            console.error(err);
+          })
+      }
     </script>
     <style>
-        body {
-          margin: 0;
-          background: #000;
-        }
+      body {
+        margin: 0;
+        background: #000;
+      }
 
-        #video {
-          display: block;
-          width: 100%;
-        }
+      #video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+      }
+
+      .menu {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 40px;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .buttonA, .buttonB {
+        background-color: #fff;
+        color: #000;
+        width: 150px;
+        height: 80px;
+        font-size: 16px;
+      }
     </style>
   </body>
 </html>
