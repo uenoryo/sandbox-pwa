@@ -19,8 +19,9 @@
       </div>
       <video id="video" autoplay playsinline></video>
       <div class="menu">
-        <button class="buttonA" onClick="launchCamera()">カメラ起動</button>
-        <button class="buttonB" onClick="stopCamera()">カメラ停止</button>
+        <button class="button" onClick="launchCamera()">カメラ起動</button>
+        <button class="button" onClick="stopCamera()">カメラ停止</button>
+        <button class="button" onClick="launchAndStopCamera()">カメラを起動して3秒後に停止</button>
       </div>
     </main>
 
@@ -64,6 +65,14 @@
         mediaStream.stop()
         mediaStream = null
       }
+
+      function launchAndStopCamera() {
+        launchCamera()
+
+        setTimeout(() => {
+          stopCamera()
+        }, 3000)
+      }
     </script>
     <style>
       body {
@@ -102,7 +111,7 @@
         justify-content: space-around;
       }
 
-      .buttonA, .buttonB {
+      .button {
         background-color: #fff;
         color: #000;
         width: 150px;
