@@ -18,7 +18,7 @@
       <video id="video" autoplay playsinline></video>
       <div class="menu">
         <button class="buttonA" onClick="launchCamera()">カメラ起動</button>
-        <button class="buttonB">カメラ停止</button>
+        <button class="buttonB" onClick="stopCamera()">カメラ停止</button>
       </div>
     </main>
 
@@ -36,9 +36,9 @@
 
       function launchCamera() {
         const video = document.getElementById("video");
-        const promise = navigator.mediaDevices.getUserMedia(medias);
+        const media = navigator.mediaDevices.getUserMedia(medias);
 
-        promise
+        media
           .then((stream) => {
             video.srcObject = stream
           })
@@ -46,6 +46,17 @@
             alert(err);
             console.error(err);
           })
+      }
+
+      function stopCamera() {
+        const video = document.getElementById("video")
+        const tracks = video.getTracks()
+
+        tracks.forEach((track) => {
+          track.stop()
+        })
+
+        video.srcObject = null
       }
     </script>
     <style>
